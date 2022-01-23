@@ -1,0 +1,22 @@
+<div class="postForm rounded bg-dark text-light p-3">
+  <button class="btn btn-secondary form-control my-2" (click)="this.postIsHidden = !this.postIsHidden">Create new
+    post</button>
+  <div *ngIf="!postIsHidden">
+    <form class="form-group" [formGroup]="postForm" (ngSubmit)="createPost()" novalidate>
+
+      <div class="post-thema">
+        <span class="d-block-block border-bottom">Subject of your post:</span>
+        <input class="form-control my-2" type="text" name="postThema" formControlName="postThema">
+      </div>
+
+      <div class="post-body">
+        <span class="d-block-block border-bottom">Content of your post:</span>
+        <textarea class="d-block form-control my-2" name="postBody" rows="10" formControlName="postBody">
+        </textarea>
+      </div>
+      <div class="text-center">
+        <input class="btn btn-secondary w-50 mt-2" type="submit" value="Send" [disabled]="postForm.invalid">
+      </div>
+    </form>
+  </div>
+</div>

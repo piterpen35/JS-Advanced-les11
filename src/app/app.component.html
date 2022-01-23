@@ -1,0 +1,9 @@
+<app-header *ngIf="!auth" [(authorizUser)]="authorizUser" (authToggle)="authToggle()"></app-header>
+<app-auth *ngIf="auth" (authToggle)="authToggle()" (authorizeUser)="authorizeUser($event)"></app-auth>
+
+<div class="container py-3" *ngIf="!auth">
+  <app-post-form [(authorizUser)]="authorizUser" (addNewPost)="addNewPost($event)"></app-post-form>
+  <app-posts-list [(authorizUser)]="authorizUser" [(posts)]="posts" (updatePosts)="updatePosts($event)"
+    (updateEditedPost)="updateEditedPost($event)" (deletePost)="deletePost($event)" (deleteAllPosts)="deleteAllPosts()">
+  </app-posts-list>
+</div>

@@ -1,0 +1,121 @@
+<div class="auth-wraper d-flex justify-content-center pt-5">
+  <div class="login bg-light rounded w-25 p-2" *ngIf="login">
+    <div class="login-header text-center my-5">
+      <h2>Authorization</h2>
+
+      <div class="error-box text-center" *ngIf="error.boolean">
+        <span class="d-block alert alert-danger py-3 px-5 rounded">{{ error.msg }}</span>
+      </div>
+
+    </div>
+    <form class="form-group mb-4" [formGroup]="loginForm" (ngSubmit)="tryLogin()" novalidate>
+      <div class="login-input">
+        <small class="ml-2 text-secondary">Enter your login</small>
+        <input class="form-control" placeholder="Login" type="text" name="login" formControlName="login"
+          (focus)="error.boolean === true ? error.boolean = false : error.boolean = false">
+      </div>
+
+      <div class="password-input my-4">
+        <small class="ml-2 text-secondary">Enter your password</small>
+        <input class="form-control" placeholder="Password" type="password" name="password" formControlName="password"
+          (focus)="error.boolean === true ? error.boolean = false : error.boolean = false">
+      </div>
+
+      <div class="submit-input text-center">
+        <input class="btn btn-primary" type="submit" value="Sign In" [disabled]="loginForm.invalid">
+      </div>
+    </form>
+
+    <div class="alter text-center">
+      <button class="btn btn-sm my-4 text-primary" (click)="loginToggle()">Create account</button>
+    </div>
+  </div>
+
+
+  <div class="register bg-light rounded w-25 p-2" *ngIf="!login">
+    <div class="register-header text-center my-5">
+      <h2>Registration</h2>
+
+      <div class="error-box text-center" *ngIf="error.boolean">
+        <span class="d-block alert alert-danger py-3 px-5 rounded">{{ error.msg }}</span>
+      </div>
+
+    </div>
+    <form class="form-group" [formGroup]="registerForm" (ngSubmit)="tryRegister(test)" novalidate #test="ngForm">
+      <div class="firstName-input my-4">
+        <small class="ml-2 text-secondary">Enter your name</small>
+        <input class="form-control" placeholder="Name" type="text" name="firstName" formControlName="firstName">
+        <div class="firstName-input-error alert alert-danger"
+          *ngIf="test.submitted && registerForm.controls.firstName.errors">
+          <span class="d-block"> The name should contain 2 to 20 Latin characters.</span>
+        </div>
+      </div>
+
+      <div class="lastName-input my-4">
+        <small class="ml-2 text-secondary">Enter your last name</small>
+        <input class="form-control" placeholder="Last name" type="text" name="lastName" formControlName="lastName">
+        <div class="lastName-input-error alert alert-danger"
+          *ngIf="test.submitted && registerForm.controls.lastName.errors">
+          <span class="d-block"> The last name should contain 2 to 20 Latin characters.</span>
+        </div>
+      </div>
+
+      <div class="login-input my-4">
+        <small class="ml-2 text-secondary">Enter your login</small>
+        <input class="form-control" placeholder="Login" type="text" name="login" formControlName="login"
+          (focus)="error.boolean === true ? error.boolean = false : error.boolean = false">
+        <div class="login-input-error alert alert-danger" *ngIf="test.submitted && registerForm.controls.login.errors">
+          <span class="d-block"> The login should contain 3 to 16 characters ONLY in Latin.</span>
+        </div>
+      </div>
+
+      <div class="password-input my-4">
+        <small class="ml-2 text-secondary">Enter your password</small>
+        <input class="form-control" placeholder="Password" type="password" name="password" formControlName="password">
+        <div class="password-input-error alert alert-danger"
+          *ngIf="test.submitted && registerForm.controls.password.errors">
+          <span class="d-block"> The password should contain 6 to 30 symbols and include both upper and lower case
+            letters in Latin and min one number.</span>
+        </div>
+      </div>
+
+      <div class="confirmPassword-input my-4">
+        <small class="ml-2 text-secondary">Confirm your password</small>
+        <input class="form-control" placeholder="Confirm password" type="password" name="confirmPassword"
+          formControlName="confirmPassword">
+        <div class="confirmPassword-input-error alert alert-danger"
+          *ngIf="test.submitted && registerForm.controls.password.value !== registerForm.controls.confirmPassword.value">
+          <span class="d-block"> Password does not match.</span>
+        </div>
+      </div>
+
+      <div class="email-input my-4">
+        <small class="ml-2 text-secondary">Enter your email adress</small>
+        <input class="form-control" placeholder="Email" type="email" name="email" formControlName="email">
+        <div class="email-input-error alert alert-danger" *ngIf="test.submitted && registerForm.controls.email.errors">
+          <span class="d-block"> Email is incorrect.</span>
+        </div>
+      </div>
+
+      <div class="gender-radio my-4">
+        <small class="ml-2 d-block text-secondary">Your gender</small>
+        <input class="m-2" type="radio" name="gender" value="male" formControlName="gender">
+        <span class="mr-5">Male</span>
+        <input class="m-2" type="radio" name="gender" value="female" formControlName="gender">
+        <span>Female</span>
+        <div class="email-input-error alert alert-danger" *ngIf="test.submitted && registerForm.controls.gender.errors">
+          <span class="d-block"> Please select your gender.</span>
+        </div>
+      </div>
+
+      <div class="submit-input text-center">
+        <input class="btn btn-primary" type="submit" value="Create account">
+      </div>
+    </form>
+
+    <div class="alter text-center">
+      <button class="btn btn-sm my-4 text-primary" (click)="loginToggle()">Sign In instead</button>
+    </div>
+  </div>
+
+</div>

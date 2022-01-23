@@ -1,0 +1,10 @@
+<div class="popup rounded bg-light w-25 p-2">
+  <div class="titel text-center">
+    <h3>Confirm?</h3>
+  </div>
+  <div class="main h6 text-center">Do you want remove all posts?</div>
+  <div class="footer navbar">
+    <button class="btn btn-sm btn-success w-25" (click)="removeAllPosts.emit(); togglePopup.emit()">Yes</button>
+    <button class="btn btn-sm btn-danger w-25" (click)="togglePopup.emit()">No</button>
+  </div>
+</div>

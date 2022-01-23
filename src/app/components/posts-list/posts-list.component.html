@@ -1,0 +1,54 @@
+<div class="admin-btn">
+  <button class="btn btn-danger form-control my-2"
+    *ngIf="authorizUser.firstName === 'Admin' && authorizUser.userId === 0" (click)="popup = !popup">Remove all
+    posts</button>
+</div>
+
+<div class="popup-wraper" *ngIf="popup">
+  <app-popup (togglePopup)="togglePopup()" (removeAllPosts)="removeAllPosts()"></app-popup>
+</div>
+
+<div *ngIf="posts; else err">
+  <div class="posts-list rounded bg-secondary text-light p-3 my-2" *ngFor="let prop of posts; let index">
+    <form novalidate #form="ngForm">
+      <div class="post-header navbar">
+        <div class="post-thema">
+          <input class="h3 rounded " type="text" [hidden]="true" name="thema" [ngModel]="prop.thema" #thema>
+          <span class="cursor-default h3 d-inline-block" *ngIf="thema.hidden === true" [innerHTML]="prop.thema"></span>
+        </div>
+
+        <div class="post-buttons w-25 d-flex justify-content-end">
+          <input class="btn btn-sm btn-outline-light w-25" type="submit" value="Save"
+            (click)="saveChanges(form); thema.hidden = !thema.hidden" *ngIf="form.form.pristine === false"
+            [hidden]="thema.hidden">
+          <button class="btn btn-sm btn-outline-light w-25 ml-2" (click)="thema.hidden = !thema.hidden"
+            *ngIf="authorizUser.userId === prop.creatorId" [hidden]="!thema.hidden">Edit</button>
+          <button class="btn btn-sm btn-outline-light w-25 ml-2" (click)="thema.hidden = !thema.hidden"
+            *ngIf="thema.hidden === false">Cancel</button>
+          <button class="btn btn-sm btn-outline-light w-25 ml-2"
+            *ngIf="authorizUser.firstName === 'Admin' && authorizUser.userId === 0"
+            (click)="removePost(index)">Delete</button>
+        </div>
+      </div>
+      <div class="post-text p-2 border rounded bg-light text-dark" *ngIf="thema.hidden === true">
+        <p [innerHTML]="prop.text"></p>
+      </div>
+      <textarea class="rounded p-2 bg-light text-dark w-100 text-end" rows="6" *ngIf="thema.hidden === false"
+        name="text" [ngModel]="prop.text">
+  </textarea>
+      <input type="text" name="id" [hidden]="true" [ngModel]="prop.id">
+      <input type="text" name="defaultDate" [hidden]="true" [ngModel]="prop.date">
+    </form>
+    <div class="post-footer navbar">
+      <div class="post-creator">
+        <small>Posted: {{prop.creator}}</small>
+      </div>
+      <div class="post-creation-time">
+        <small>{{prop.date | date:"HH:mm dd.MM.yyyy"}}</small>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #err>
+  {{ error }}
+</ng-template>
